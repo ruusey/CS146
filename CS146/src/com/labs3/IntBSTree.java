@@ -13,7 +13,7 @@ public class IntBSTree {
 		this.root = null;
 	}
 	//INSERT NEW DATA
-	public void insert(int data) {
+	public void insert(String data) {
 		System.out.println("Inserting " + data);
 		Node insert = new Node(data);
 		root = insert(root, insert);
@@ -27,7 +27,7 @@ public class IntBSTree {
 			return insert;
 		}
 		
-		if (insert.data < root.data) {
+		if (insert.dataLength() < root.dataLength()) {
 			root.leftChild = (insert(root.leftChild, insert));
 		} else {
 			root.rightChild = (insert(root.rightChild, insert));
@@ -36,7 +36,7 @@ public class IntBSTree {
 		return root;
 	}
 	//REMOVE DATA
-	public void remove(int data) {
+	public void remove(String data) {
 		Node insert = new Node(data);
 		root = remove(root, insert);
 	}
@@ -44,9 +44,9 @@ public class IntBSTree {
 	public Node remove(Node root, Node toDelete) {
 		if (root == null) {
 			return null;
-		} else if (toDelete.data < root.data) {
+		} else if (toDelete.dataLength() < root.dataLength()) {
 			root.leftChild = (remove(root.leftChild, toDelete));
-		} else if (toDelete.data > root.data) {
+		} else if (toDelete.dataLength() > root.dataLength()) {
 			root.rightChild = (remove(root.rightChild, toDelete));
 		} else {
 			if (root.leftChild == null) {
@@ -69,28 +69,28 @@ public class IntBSTree {
 		return root;
 	}
 	//GET DEPTH METHOD
-	public int getDepth(Node root, int data, int curDepth) {
+	public int getDepth(Node root, String data, int curDepth) {
 		if (!find(data)) {
 			return -1;
 		}
 		if (root.data == data) {
 			return curDepth;
-		} else if (data > root.data) {
+		} else if (data.length() > root.dataLength()) {
 
 			return getDepth(root.rightChild, data, curDepth + 1);
-		} else if (data < root.data) {
+		} else if (data.length() < root.dataLength()) {
 			return getDepth(root.leftChild, data, curDepth + 1);
 		} else {
 			return -1;
 		}
 	}
 	//NODE FIND HELPER METHOD
-	public boolean find(int data) {
+	public boolean find(String data) {
 		Node current = root;
 		while (current != null) {
-			if (current.data == data) {
+			if (current.data.equals(data)) {
 				return true;
-			} else if (current.data > data) {
+			} else if (current.dataLength() > data.length()) {
 				current = current.leftChild;
 			} else {
 				current = current.rightChild;
@@ -108,15 +108,18 @@ public class IntBSTree {
 	}
 
 	private class Node {
-		public int data;
+		public String data;
 		public Node leftChild;
 		public Node rightChild;
 
-		public Node(int data) {
+		public Node(String data) {
 			this.data = data;
 			leftChild = null;
 			rightChild = null;
 
+		}
+		public int dataLength() {
+		    return this.data.length();
 		}
 	}
 }
