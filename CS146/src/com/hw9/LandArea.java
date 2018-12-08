@@ -2,11 +2,11 @@ package com.hw9;
 
 import java.util.ArrayList;
 
-public class Quadrant {
+public class LandArea {
 	private ArrayList<Bridge> bridges = new ArrayList<Bridge>();
 	private int quadrant;
 	
-	public Quadrant(int quadrant) {
+	public LandArea(int quadrant) {
 		this.quadrant = quadrant;
 	}
 	

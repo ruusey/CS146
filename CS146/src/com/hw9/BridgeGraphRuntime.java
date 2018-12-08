@@ -10,20 +10,24 @@ public class BridgeGraphRuntime {
 	//FOR EVERY QUADRANT OF LAND
 	private static void findSolution(){
 		Bridge[] list = null;
-		for(Quadrant q : graph.quadrants ){
+		boolean success = false;
+		for(LandArea q : graph.landAreas ){
 			//EMPTY LIST TO HOLD THE ALREADY CROSSED BRIDGES
-			list = new Bridge[16];
-			traverseBridges(list, 0, (Quadrant)q);
+			list = new Bridge[BridgeGraph.NUMBER_BRIDGES];
+			success = traverseBridges(list, 0, (LandArea)q);
 			
 		}
+		System.out.println(success ? "Found a path!" : "No possible crossings");
+		
+		
 		
 	}
 
-	private static void traverseBridges(Bridge[] bridges, int index, Quadrant q){
+	private static boolean traverseBridges(Bridge[] bridges, int index, LandArea q){
 		//IF ALL BRIDGES HAVE BEEN CROSSED AND NONE HAVE BEEN DOUBLE TRAVERSED (16 possible crossings)
 		if(index == BridgeGraph.NUMBER_BRIDGES) {
-			System.out.println("Found a route to take!");
-	
+			
+			return true;
 		}else{
 			//TEST ALL POSSIBLE CROSSINGS GOING BOTH WAYS ON THE BRIDGES (Bruteforce method)
 			for(Bridge b : q.getBridges()){
@@ -38,7 +42,9 @@ public class BridgeGraphRuntime {
 					//System.out.println(b.toString()+" Has Already been crossed!");
 				}
 			}
+			return false;
 		}
+		
 	}
 	//HAS THE BRIDGE ALREADY BEEN CROSSED (contained in the list of crossed bridges)
 	private static boolean beenCrossed(Bridge[] bridges, int index, Bridge b){
